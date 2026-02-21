@@ -1,0 +1,32 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is admin
+    function isAdmin() {
+      return request.auth != null && 
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    // ── Products ────────────────────────────────────────────────────────────
+    match /products/{productId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // ── Users ───────────────────────────────────────────────────────────────
+    match /users/{userId} {
+      // Users can read and update their own document (for profile/favorites)
+      allow read, update: if request.auth != null && request.auth.uid == userId;
+      
+      // Only admins can create (initially via service) and manage roles
+      // Note: registerUser calls createUserDocument which uses setDoc. 
+      // We need to allow creation for the owner too if they don't exist yet.
+      allow create: if request.auth != null && request.auth.uid == userId;
+      
+      // Admin can do everything
+      allow read, write: if isAdmin();
+    }
+  }
+}
