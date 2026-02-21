@@ -2,7 +2,7 @@
 
 const WHATSAPP_NUMBER = import.meta.env.VITE_WHATSAPP_NUMBER || '919999999999';
 
-export const buildWhatsAppUrl = (productName, productId) => {
+const buildWhatsAppUrl = (productName, productId) => {
     const message = encodeURIComponent(
         `Hello,\nI would like to inquire about:\n\nProduct Name: ${productName}\nProduct ID: ${productId}\n\nPlease share more details.`
     );

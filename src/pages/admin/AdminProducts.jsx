@@ -101,9 +101,8 @@ const ProductModal = ({ product, onClose, onSaved }) => {
             if (isEdit) {
                 await updateProduct(product.id, payload);
             } else {
-                const { productId: newId } = await addProduct(payload);
+                await addProduct(payload);
                 // If we had temp uploaded images, they'll be under TEMP prefix — acceptable for now
-                _ = newId;
             }
             onSaved();
         } catch (err) {
@@ -112,9 +111,6 @@ const ProductModal = ({ product, onClose, onSaved }) => {
             setSaving(false);
         }
     };
-
-    // Suppress unused variable warning
-    const _ = null;
 
     return (
         <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 backdrop-blur-sm overflow-y-auto py-8 px-4">

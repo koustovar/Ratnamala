@@ -99,7 +99,7 @@ const AdminLayout = ({ children }) => {
         <div className="min-h-screen bg-emerald-900 flex">
             {/* Desktop Sidebar */}
             <aside className="hidden lg:flex flex-col w-60 bg-emerald-950 border-r border-emerald-800 fixed top-0 left-0 h-full z-40">
-                <SidebarContent />
+                {SidebarContent()}
             </aside>
 
             {/* Mobile Sidebar Overlay */}
@@ -115,7 +115,7 @@ const AdminLayout = ({ children }) => {
                 className={`lg:hidden fixed top-0 left-0 h-full w-64 bg-emerald-950 border-r border-emerald-800 z-50 transform transition-transform duration-300 ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'
                     }`}
             >
-                <SidebarContent />
+                {SidebarContent()}
             </aside>
 
             {/* Main Content */}
